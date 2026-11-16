@@ -1,0 +1,33 @@
+<section class="cabecera">
+  <h2>Solicitudes</h2>
+  <a routerLink="/solicitudes/nueva" class="boton">+ Nueva solicitud</a>
+</section>
+
+@defer (on timer(800ms)) {
+  <app-resumen />
+} @placeholder {
+  <p class="vacio">Resumen pendiente de cargar...</p>
+} @loading {
+  <p class="vacio">Cargando resumen...</p>
+}
+
+<ul class="lista">
+  @for (r of servicio.registros(); track r.id) {
+    <li>
+      <div>
+        <strong>{{ codigoDe(r.id) }} · {{ r.solicitante }}</strong>
+        <span>{{ r.categoria }} · {{ r.prioridad }} · {{ r.items.length }} equipo(s)</span>
+      </div>
+      <div class="acciones">
+        <select class="select-estado" [value]="r.estado" (change)="cambiarEstado(r.id, $any($event.target).value)">
+          @for (e of estados; track e) {
+            <option [value]="e">{{ e }}</option>
+          }
+        </select>
+        <button type="button" class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
+      </div>
+    </li>
+  } @empty {
+    <li class="vacio">Aún no hay solicitudes registradas</li>
+  }
+</ul>

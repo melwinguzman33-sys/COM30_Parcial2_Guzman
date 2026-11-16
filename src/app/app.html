@@ -1,38 +1,14 @@
+<header class="barra">
+  <nav class="menu" aria-label="Menú principal">
+    <a class="marca" routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
+      Mesa de ayuda TI
+    </a>
+    <a routerLink="/solicitudes" routerLinkActive="activo">Solicitudes</a>
+    <a routerLink="/solicitudes/nueva" routerLinkActive="activo">Nueva</a>
+    <a routerLink="/busqueda" routerLinkActive="activo">Búsqueda</a>
+  </nav>
+</header>
+
 <main class="contenedor">
-  <app-busqueda />
-
-  <app-registro-form />
-
-  @defer (on timer(800ms)) {
-    <app-resumen />
-  } @placeholder {
-    <p class="vacio">Resumen pendiente de cargar...</p>
-  } @loading {
-    <p class="vacio">Cargando resumen...</p>
-  }
-
-  <ul class="lista">
-    @for (r of servicio.registros(); track r.id) {
-      <li>
-        <div>
-          <strong>{{ r.solicitante }}</strong>
-          <span>{{ r.categoria }} · {{ r.prioridad }} · {{ r.items.length }} equipo(s)</span>
-        </div>
-        <div class="acciones">
-          <select
-            class="select-estado"
-            [value]="r.estado"
-            (change)="cambiarEstado(r.id, $any($event.target).value)"
-          >
-            @for (e of estados; track e) {
-              <option [value]="e">{{ e }}</option>
-            }
-          </select>
-          <button type="button" class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
-        </div>
-      </li>
-    } @empty {
-      <li class="vacio">Aún no hay solicitudes registradas</li>
-    }
-  </ul>
+  <router-outlet />
 </main>

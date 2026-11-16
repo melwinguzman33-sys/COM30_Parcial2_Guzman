@@ -8,6 +8,11 @@ export function normalizar(texto: string): string {
   return texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 }
 
+// T08: código visible de una solicitud (1 → R01). Se usa como parámetro :id de la ruta.
+export function codigoDe(id: number): string {
+  return 'R' + String(id).padStart(2, '0');
+}
+
 @Injectable({ providedIn: 'root' })
 export class RegistroService {
   private readonly _registros = signal<Registro[]>(SEMILLA);
