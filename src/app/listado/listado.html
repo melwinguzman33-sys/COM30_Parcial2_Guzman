@@ -33,7 +33,7 @@
       <div class="acciones">
         <select class="select-estado" [value]="r.estado" (change)="cambiarEstado(r.id, $any($event.target).value)">
           @for (e of estados; track e) {
-            <option [value]="e">{{ e }}</option>
+            <option [value]="e" [selected]="e === r.estado">{{ e }}</option>
           }
         </select>
         <button type="button" class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
