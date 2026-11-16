@@ -100,3 +100,12 @@ h2 {
 .btn-eliminar:hover {
   background: #fee2e2;
 }
+.enlace {
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.enlace:hover strong {
+  color: #2563eb;
+  text-decoration: underline;
+}

@@ -1,0 +1,28 @@
+<section class="tarjeta">
+  @if (registro(); as r) {
+    <div class="cabecera">
+      <h2>Solicitud {{ codigoDe(r.id) }}</h2>
+      <span class="estado">{{ r.estado }}</span>
+    </div>
+
+    <dl>
+      <dt>Solicitante</dt><dd>{{ r.solicitante }}</dd>
+      <dt>Correo</dt><dd>{{ r.correo }}</dd>
+      <dt>Categoría</dt><dd>{{ r.categoria }}</dd>
+      <dt>Prioridad</dt><dd>{{ r.prioridad }}</dd>
+      <dt>Descripción</dt><dd>{{ r.descripcion }}</dd>
+      <dt>Impacto</dt><dd>{{ r.impacto || '—' }}</dd>
+      <dt>Equipos</dt>
+      <dd>
+        @for (item of r.items; track item.codigo) {
+          <span class="chip">{{ item.codigo }} · {{ item.ubicacion }}</span>
+        }
+      </dd>
+    </dl>
+  } @else {
+    <h2>Solicitud no encontrada</h2>
+    <p class="aviso">No existe la solicitud {{ id() }}.</p>
+  }
+
+  <a routerLink="/solicitudes" class="volver">← Volver al listado</a>
+</section>

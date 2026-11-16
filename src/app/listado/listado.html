@@ -15,7 +15,7 @@
   @for (r of servicio.registros(); track r.id) {
     <li>
       <div>
-        <strong>{{ codigoDe(r.id) }} · {{ r.solicitante }}</strong>
+        <a class="enlace" [routerLink]="[codigoDe(r.id)]"><strong>{{ codigoDe(r.id) }} · {{ r.solicitante }}</strong></a>
         <span>{{ r.categoria }} · {{ r.prioridad }} · {{ r.items.length }} equipo(s)</span>
       </div>
       <div class="acciones">
