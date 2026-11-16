@@ -13,5 +13,11 @@ export const routes: Routes = [
   // 'nueva' va antes que ':id'; en el orden contrario «nueva» se leería como un código.
   { path: 'solicitudes/:id', component: Detalle, title: 'Detalle de solicitud · Mesa de ayuda TI' },
   { path: 'busqueda', component: Busqueda, title: 'Búsqueda · Mesa de ayuda TI' },
+  {
+    path: 'estadisticas',
+    // Carga diferida: el componente se descarga en su propio chunk la primera vez que se visita.
+    loadComponent: () => import('./estadisticas/estadisticas').then(m => m.Estadisticas),
+    title: 'Estadísticas · Mesa de ayuda TI',
+  },
   { path: '**', component: NoEncontrada, title: 'Página no encontrada · Mesa de ayuda TI' },
 ];

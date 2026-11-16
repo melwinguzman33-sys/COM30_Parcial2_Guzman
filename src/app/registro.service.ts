@@ -29,11 +29,11 @@ export class RegistroService {
 
   private siguienteId = SEMILLA.length + 1;
 
-  agregar(datos: Omit<Registro, 'id' | 'estado'>): void {
-    this._registros.update(lista => [
-      ...lista,
-      { ...datos, id: this.siguienteId++, estado: 'Pendiente' },
-    ]);
+  // T08: devuelve el registro creado para poder navegar a su detalle.
+  agregar(datos: Omit<Registro, 'id' | 'estado'>): Registro {
+    const nuevo: Registro = { ...datos, id: this.siguienteId++, estado: 'Pendiente' };
+    this._registros.update(lista => [...lista, nuevo]);
+    return nuevo;
   }
 
   cambiarEstado(id: number, estado: Estado): void {

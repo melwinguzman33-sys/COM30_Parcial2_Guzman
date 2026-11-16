@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegistroService } from '../registro.service';
+import { RegistroService, codigoDe } from '../registro.service';
 import { Prioridad } from '../registro.model';
 import { sinSoloEspacios, impactoSiCritica, minimoItems } from '../validadores';
 
@@ -17,6 +18,7 @@ const PATRON_CODIGO = /^[A-Z]{2,4}-\d{3,4}$/;
 export class RegistroForm {
   private fb = inject(FormBuilder).nonNullable;
   private servicio = inject(RegistroService);
+  private router = inject(Router);
 
   categorias = ['Hardware', 'Software', 'Red', 'Accesos'];
   prioridades: Prioridad[] = ['Baja', 'Media', 'Alta', 'Crítica'];
@@ -55,9 +57,11 @@ export class RegistroForm {
       this.form.markAllAsTouched();
       return;
     }
-    this.servicio.agregar(this.form.getRawValue());
+    const nuevo = this.servicio.agregar(this.form.getRawValue());
     this.form.reset();
     this.items.clear();
     this.agregarItem();
+    // T08: navegación programática al detalle del registro recién creado.
+    this.router.navigate(['/solicitudes', codigoDe(nuevo.id)]);
   }
 }

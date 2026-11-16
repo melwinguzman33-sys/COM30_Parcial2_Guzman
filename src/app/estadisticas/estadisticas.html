@@ -1,0 +1,41 @@
+<section class="tarjeta">
+  <h2>Estadísticas de la mesa de ayuda</h2>
+  <p class="total">Total de solicitudes: <strong>{{ total() }}</strong></p>
+
+  <div class="grupos">
+    <div>
+      <h3>Por estado</h3>
+      @for (f of porEstado(); track f.nombre) {
+        <a class="fila" routerLink="/solicitudes" [queryParams]="{ estado: f.nombre }">
+          <span>{{ f.nombre }}</span>
+          <span class="barra"><span [style.width.%]="f.porcentaje"></span></span>
+          <strong>{{ f.cantidad }}</strong>
+        </a>
+      }
+    </div>
+
+    <div>
+      <h3>Por prioridad</h3>
+      @for (f of porPrioridad(); track f.nombre) {
+        <div class="fila">
+          <span>{{ f.nombre }}</span>
+          <span class="barra"><span [style.width.%]="f.porcentaje"></span></span>
+          <strong>{{ f.cantidad }}</strong>
+        </div>
+      }
+    </div>
+
+    <div>
+      <h3>Por categoría</h3>
+      @for (f of porCategoria(); track f.nombre) {
+        <div class="fila">
+          <span>{{ f.nombre }}</span>
+          <span class="barra"><span [style.width.%]="f.porcentaje"></span></span>
+          <strong>{{ f.cantidad }}</strong>
+        </div>
+      } @empty {
+        <p>Sin solicitudes registradas.</p>
+      }
+    </div>
+  </div>
+</section>
