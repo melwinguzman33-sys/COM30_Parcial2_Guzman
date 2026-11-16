@@ -11,8 +11,20 @@
   <p class="vacio">Cargando resumen...</p>
 }
 
+<nav class="filtros" aria-label="Filtrar por estado">
+  <a routerLink="." [queryParams]="{ estado: null }" [class.activo]="!estado()">Todos</a>
+  @for (e of estados; track e) {
+    <a routerLink="." [queryParams]="{ estado: e }" [class.activo]="estado() === e">{{ e }}</a>
+  }
+</nav>
+
+<p class="conteo">
+  Mostrando <strong>{{ visibles().length }}</strong> de {{ servicio.total() }} ·
+  Filtro: <strong>{{ estado() || 'Todos' }}</strong>
+</p>
+
 <ul class="lista">
-  @for (r of servicio.registros(); track r.id) {
+  @for (r of visibles(); track r.id) {
     <li>
       <div>
         <a class="enlace" [routerLink]="[codigoDe(r.id)]"><strong>{{ codigoDe(r.id) }} · {{ r.solicitante }}</strong></a>
@@ -28,6 +40,12 @@
       </div>
     </li>
   } @empty {
-    <li class="vacio">Aún no hay solicitudes registradas</li>
+    <li class="vacio">
+      @if (estado()) {
+        No hay solicitudes con estado «{{ estado() }}» (0 registros).
+      } @else {
+        Aún no hay solicitudes registradas
+      }
+    </li>
   }
 </ul>
