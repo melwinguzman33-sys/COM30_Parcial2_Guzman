@@ -4,6 +4,7 @@ import { RegistroForm } from './registro-form/registro-form';
 import { Detalle } from './detalle/detalle';
 import { Busqueda } from './busqueda/busqueda';
 import { Taller2 } from './taller2/taller2';
+import { DetalleTaller2 } from './taller2/detalle';
 import { NoEncontrada } from './no-encontrada/no-encontrada';
 
 // T08: el orden importa. El comodín '**' va siempre de último.
@@ -21,5 +22,6 @@ export const routes: Routes = [
     title: 'Estadísticas · Mesa de ayuda TI',
   },
   { path: 'taller2', component: Taller2, title: 'Taller 2 · Mesa de ayuda TI' },
+  { path: 'taller2/detalle/:codigo', component: DetalleTaller2, title: 'Detalle Taller 2 · Mesa de ayuda TI' },
   { path: '**', component: NoEncontrada, title: 'Página no encontrada · Mesa de ayuda TI' },
 ];

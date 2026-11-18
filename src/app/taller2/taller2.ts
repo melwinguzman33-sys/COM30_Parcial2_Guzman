@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { Router } from '@angular/router';
 import { RegistroService, normalizar } from '../registro.service';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { hastaMayor, multiploDe } from './validadores';
@@ -18,6 +19,7 @@ export const PATRON_CODIGO = /^[A-Z]{2}\d{3}$/;
 })
 export class Taller2 {
   private readonly fb = inject(FormBuilder).nonNullable;
+  private readonly router = inject(Router);
 
   readonly m = M;
   readonly tope = TOPE;
@@ -80,5 +82,7 @@ export class Taller2 {
       this.form.markAllAsTouched();
       return;
     }
+    const { codigo, cantidad } = this.form.getRawValue();
+    this.router.navigate(['/taller2/detalle', codigo], { queryParams: { cantidad } });
   }
 }
