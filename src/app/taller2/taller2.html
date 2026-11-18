@@ -1,0 +1,41 @@
+<main class="contenedor">
+  <h2>Taller 2 · Solicitud validada</h2>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <label>
+      Código
+      <input formControlName="codigo" placeholder="AB123" />
+    </label>
+    @if (mostrar(form.controls.codigo)) {
+      @if (form.controls.codigo.hasError('required')) { <small class="error">El código es obligatorio.</small> }
+      @if (form.controls.codigo.hasError('pattern')) { <small class="error">Dos letras mayúsculas y tres dígitos (ej. AB123).</small> }
+    }
+
+    <label>
+      Cantidad
+      <input type="number" formControlName="cantidad" />
+    </label>
+    @if (mostrar(form.controls.cantidad)) {
+      @if (form.controls.cantidad.hasError('required')) { <small class="error">La cantidad es obligatoria.</small> }
+      @if (form.controls.cantidad.hasError('min')) { <small class="error">Error min: la cantidad mínima es 1.</small> }
+      @if (form.controls.cantidad.hasError('max')) { <small class="error">Error max: la cantidad máxima es {{ tope }}.</small> }
+      @if (form.controls.cantidad.hasError('multiplo')) { <small class="error">Error multiplo: debe ser múltiplo de {{ m }}.</small> }
+    }
+
+    <label>
+      Desde
+      <input type="number" formControlName="desde" />
+    </label>
+    @if (mostrar(form.controls.desde)) { <small class="error">Desde es obligatorio.</small> }
+
+    <label>
+      Hasta
+      <input type="number" formControlName="hasta" />
+    </label>
+    @if (mostrar(form.controls.hasta)) { <small class="error">Hasta es obligatorio.</small> }
+    @if (mostrarGrupo()) { <small class="error">Error hastaMayor: hasta debe ser mayor que desde.</small> }
+
+    <button type="submit">Enviar</button>
+  </form>
+
+</main>
