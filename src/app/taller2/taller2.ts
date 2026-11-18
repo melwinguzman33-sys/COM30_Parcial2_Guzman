@@ -1,4 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { RegistroService, normalizar } from '../registro.service';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { hastaMayor, multiploDe } from './validadores';
 
@@ -28,6 +31,37 @@ export class Taller2 {
     },
     { validators: hastaMayor },
   );
+
+  // R2: búsqueda reactiva
+  private readonly servicio = inject(RegistroService);
+  readonly buscar = this.fb.control('');
+  readonly ultimo = signal('');
+  readonly emisiones = signal(0);
+
+  readonly filtrados = computed(() => {
+    const texto = normalizar(this.ultimo());
+    return this.servicio
+      .registros()
+      .filter(
+        r =>
+          normalizar(r.solicitante).includes(texto) ||
+          normalizar(r.categoria).includes(texto),
+      );
+  });
+
+  constructor() {
+    this.buscar.valueChanges
+      .pipe(
+        map(v => v.trim()),
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntilDestroyed(),
+      )
+      .subscribe(valor => {
+        this.ultimo.set(valor);
+        this.emisiones.update(n => n + 1);
+      });
+  }
 
   mostrar(control: AbstractControl): boolean {
     return control.invalid && (control.touched || control.dirty);

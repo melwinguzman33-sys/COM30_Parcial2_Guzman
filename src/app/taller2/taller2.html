@@ -38,4 +38,18 @@
     <button type="submit">Enviar</button>
   </form>
 
+  <section class="busqueda">
+    <h3>Buscar en el listado</h3>
+    <input [formControl]="buscar" placeholder="Buscar por solicitante o categoría" />
+    <p>Último valor: {{ ultimo() }}</p>
+    <p>Emisiones: {{ emisiones() }}</p>
+
+    <ul>
+      @for (r of filtrados(); track r.id) {
+        <li>{{ r.solicitante }} · {{ r.categoria }} · {{ r.estado }}</li>
+      } @empty {
+        <li>Sin resultados</li>
+      }
+    </ul>
+  </section>
 </main>
