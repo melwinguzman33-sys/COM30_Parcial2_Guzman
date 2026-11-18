@@ -21,7 +21,7 @@ export const routes: Routes = [
     loadComponent: () => import('./estadisticas/estadisticas').then(m => m.Estadisticas),
     title: 'Estadísticas · Mesa de ayuda TI',
   },
-  { path: 'taller2', component: Taller2, title: 'Taller 2 · Mesa de ayuda TI' },
-  { path: 'taller2/detalle/:codigo', component: DetalleTaller2, title: 'Detalle Taller 2 · Mesa de ayuda TI' },
+  { path: 'taller2', component: Taller2, title: 'Parcial 2 · Mesa de ayuda TI' },
+  { path: 'taller2/detalle/:codigo', component: DetalleTaller2, title: 'Detalle Parcial 2 · Mesa de ayuda TI' },
   { path: '**', component: NoEncontrada, title: 'Página no encontrada · Mesa de ayuda TI' },
 ];
